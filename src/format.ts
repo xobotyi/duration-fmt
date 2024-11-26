@@ -10,17 +10,16 @@ export type FormatOptions<
   separator?: string;
 };
 
-const defaultOptions = {
-  units: durationUnits,
-
-  separator: " ",
-};
-
 export function format<DU extends DurationUnits<string> = typeof durationUnits>(
   input: number,
   options?: FormatOptions<DU>,
 ): string {
-  const opts = { ...defaultOptions, ...options };
+  const opts = {
+    units: durationUnits,
+    separator: " ",
+
+    ...options,
+  };
   const smallestUnit = opts.units[opts.units.length - 1];
   opts.inputUnit ??= smallestUnit[0] as DurationUnitNames<DU>;
   let result: string[] = [];
