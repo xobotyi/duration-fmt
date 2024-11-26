@@ -14,16 +14,15 @@ duration.y = 365 * duration.d;
  * Order goes from the largest unit to the smallest.
  * All units must be a multiple of the smallest unit.
  */
-export type DurationUnits<U extends string> = readonly (readonly [U, number])[];
+export type DurationUnits<U extends string> = ReadonlyArray<readonly [U, number]>;
 
-export type DurationUnitNames<DU> =
-  DU extends DurationUnits<infer U> ? U : never;
+export type DurationUnitNames<DU> = DU extends DurationUnits<infer U> ? U : never;
 
 export const durationUnits = [
-  ["w", duration.w],
-  ["d", duration.d],
-  ["h", duration.h],
-  ["m", duration.m],
-  ["s", duration.s],
-  ["ms", duration.ms],
+	['w', duration.w],
+	['d', duration.d],
+	['h', duration.h],
+	['m', duration.m],
+	['s', duration.s],
+	['ms', duration.ms],
 ] as const;
