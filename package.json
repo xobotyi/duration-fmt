@@ -3,15 +3,30 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "packageManager": "yarn@4.5.2",
   "devDependencies": {
-    "@vitest/coverage-v8": "^2.1.5",
-    "prettier": "^3.3.3",
-    "typescript": "^5.6.3",
-    "vitest": "^2.1.5"
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@react-hookz/eslint-config": "^4.1.4",
+    "@react-hookz/eslint-formatter-gha": "^3.0.0",
+    "@semantic-release/exec": "^6.0.3",
+    "@vitest/coverage-v8": "^2.1.7",
+    "eslint": "^9.16.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "pinst": "^3.0.0",
+    "semantic-release": "^24.2.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.7"
   },
-    "scripts": {
-        "test": "vitest",
-        "test:coverage": "vitest --coverage"
-    }
+  "scripts": {
+    "postinstall": "husky",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
+  },
+  "packageManager": "yarn@4.5.2"
 }

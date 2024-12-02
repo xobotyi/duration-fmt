@@ -1,8 +1,9 @@
 {
-  "include": ["src/**/*"],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+		"noEmit": true,
+		"declaration": true,
+		"target": "ESNext",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "noImplicitAny": true,
     "esModuleInterop": true,

@@ -1,50 +1,50 @@
-import { DurationUnitNames, durationUnits, DurationUnits } from "./duration.js";
+import {type DurationUnitNames, durationUnits, type DurationUnits} from './duration.js';
 
-export type FormatOptions<
-  DU extends DurationUnits<string>,
-  U = DurationUnitNames<DU>,
-> = {
-  units?: DU;
-  inputUnit?: U;
+export type FormatOptions<DU extends DurationUnits<string>, U = DurationUnitNames<DU>> = {
+	units?: DU;
+	inputUnit?: U;
 
-  separator?: string;
+	separator?: string;
 };
 
 export function format<DU extends DurationUnits<string> = typeof durationUnits>(
-  input: number,
-  options?: FormatOptions<DU>,
+	input: number,
+	options?: FormatOptions<DU>,
 ): string {
-  const opts = {
-    units: durationUnits,
-    separator: " ",
+	const optionsResolved = {
+		units: durationUnits,
+		separator: ' ',
 
-    ...options,
-  };
-  const smallestUnit = opts.units[opts.units.length - 1];
-  opts.inputUnit ??= smallestUnit[0] as DurationUnitNames<DU>;
-  let result: string[] = [];
+		...options,
+	};
 
-  if (input < smallestUnit[1]) {
-    return `0${smallestUnit[0]}`;
-  }
+	if (optionsResolved.units.length === 0) {
+		throw new Error('Units array must not be empty');
+	}
 
-  const inputUnit = opts.units.find(([unit]) => unit === opts.inputUnit);
-  if (!inputUnit) {
-    throw new Error(
-      "Invalid input unit option, it must be present in the units array",
-    );
-  }
+	const smallestUnit = optionsResolved.units.at(-1)!;
+	optionsResolved.inputUnit ??= smallestUnit[0] as DurationUnitNames<DU>;
+	const result: string[] = [];
 
-  input *= inputUnit[1];
+	if (input < smallestUnit[1]) {
+		return `0${smallestUnit[0]}`;
+	}
 
-  for (const [unit, unitVal] of opts.units) {
-    const value = Math.floor(input / unitVal);
-    if (value > 0) {
-      result.push(`${value}${unit}`);
+	const inputUnit = optionsResolved.units.find(([unit]) => unit === optionsResolved.inputUnit);
+	if (!inputUnit) {
+		throw new Error('Invalid input unit option, it must be present in the units array');
+	}
 
-      input -= value * unitVal;
-    }
-  }
+	input *= inputUnit[1];
 
-  return result.join(opts.separator);
+	for (const [unit, unitValue] of optionsResolved.units) {
+		const value = Math.floor(input / unitValue);
+		if (value > 0) {
+			result.push(`${value}${unit}`);
+
+			input -= value * unitValue;
+		}
+	}
+
+	return result.join(optionsResolved.separator);
 }
