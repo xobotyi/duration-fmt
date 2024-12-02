@@ -1,4 +1,4 @@
-import { type DurationUnitNames, durationUnits, type DurationUnits } from './duration.js';
+import {type DurationUnitNames, durationUnits, type DurationUnits} from './duration.js';
 
 const parseRX = /(\d+)(\p{L}+)[\t ]*/giu;
 
@@ -9,24 +9,24 @@ type ParseOptions<DU extends DurationUnits<string>, U = DurationUnitNames<DU>> =
 
 export function parse<DU extends DurationUnits<string> = typeof durationUnits>(
 	input: string,
-	options?: ParseOptions<DU>
+	options?: ParseOptions<DU>,
 ): number {
-	const options_ = {
+	const optionsResolved = {
 		units: durationUnits,
 
 		...options,
 	};
 
-	if (options_.outputUnit === undefined) {
-		const smallestUnit = options_.units.at(-1);
+	if (optionsResolved.outputUnit === undefined) {
+		const smallestUnit = optionsResolved.units.at(-1);
 		if (smallestUnit === undefined) {
 			throw new Error('Units array must not be empty');
 		}
 
-		options_.outputUnit = smallestUnit[0] as DurationUnitNames<DU>;
+		optionsResolved.outputUnit = smallestUnit[0] as DurationUnitNames<DU>;
 	}
 
-	const outputUnit = options_.units.find(([unit]) => unit === options_.outputUnit);
+	const outputUnit = optionsResolved.units.find(([unit]) => unit === optionsResolved.outputUnit);
 	if (!outputUnit) {
 		throw new Error('Invalid output unit option, it must be present in the units array');
 	}
@@ -38,7 +38,7 @@ export function parse<DU extends DurationUnits<string> = typeof durationUnits>(
 		matchedLength += match[0].length;
 		const [, amount, unit] = match;
 
-		const unitData = options_.units.find(([u]) => u === unit);
+		const unitData = optionsResolved.units.find(([u]) => u === unit);
 		if (unitData === undefined) {
 			throw new Error(`Invalid duration unit: ${unit}`);
 		}

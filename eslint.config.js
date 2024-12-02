@@ -15,9 +15,7 @@ const config = [
 	...vitestConfig,
 	{
 		files: ['**/*.{test,spec}.ts'],
-		rules: {
-			'@stylistic/no-mixed-operators': 'off',
-		},
+		rules: {},
 	},
 ];
 

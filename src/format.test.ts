@@ -1,5 +1,5 @@
-import { describe, expect, test } from 'vitest';
-import { format } from './format.js';
+import {describe, expect, test} from 'vitest';
+import {format} from './format.js';
 
 describe('format', () => {
 	describe('default options', () => {
@@ -7,16 +7,16 @@ describe('format', () => {
 			args: Parameters<typeof format>;
 			out: ReturnType<typeof format>;
 		}>([
-			{ args: [0], out: '0ms' },
-			{ args: [1], out: '1ms' },
-			{ args: [1000], out: '1s' },
-			{ args: [3000], out: '3s' },
-			{ args: [1050], out: '1s 50ms' },
-			{ args: [61_001], out: '1m 1s 1ms' },
-			{ args: [3_601_001], out: '1h 1s 1ms' },
-			{ args: [86_461_001], out: '1d 1m 1s 1ms' },
-			{ args: [604_801_000], out: '1w 1s' },
-		])('format($args) => $out', ({ args, out }) => {
+			{args: [0], out: '0ms'},
+			{args: [1], out: '1ms'},
+			{args: [1000], out: '1s'},
+			{args: [3000], out: '3s'},
+			{args: [1050], out: '1s 50ms'},
+			{args: [61_001], out: '1m 1s 1ms'},
+			{args: [3_601_001], out: '1h 1s 1ms'},
+			{args: [86_461_001], out: '1d 1m 1s 1ms'},
+			{args: [604_801_000], out: '1w 1s'},
+		])('format($args) => $out', ({args, out}) => {
 			expect(format(...args)).toBe(out);
 		});
 	});
@@ -25,7 +25,7 @@ describe('format', () => {
 		test('throws an error when input unit is not in the units array', () => {
 			expect(() => {
 				// @ts-expect-error Testing invalid input
-				format(1, { inputUnit: 'y' });
+				format(1, {inputUnit: 'y'});
 			}).toThrowError('Invalid input unit option, it must be present in the units array');
 		});
 	});
@@ -35,11 +35,11 @@ describe('format', () => {
 			args: Parameters<typeof format>;
 			out: ReturnType<typeof format>;
 		}>([
-			{ args: [1001, { separator: '-' }], out: '1s-1ms' },
-			{ args: [61_001, { separator: '' }], out: '1m1s1ms' },
-			{ args: [3_601_001, { separator: '-' }], out: '1h-1s-1ms' },
-			{ args: [86_461_001, { separator: '' }], out: '1d1m1s1ms' },
-		])('format($args) => $out', ({ args, out }) => {
+			{args: [1001, {separator: '-'}], out: '1s-1ms'},
+			{args: [61_001, {separator: ''}], out: '1m1s1ms'},
+			{args: [3_601_001, {separator: '-'}], out: '1h-1s-1ms'},
+			{args: [86_461_001, {separator: ''}], out: '1d1m1s1ms'},
+		])('format($args) => $out', ({args, out}) => {
 			expect(format(...args)).toBe(out);
 		});
 	});
@@ -49,11 +49,11 @@ describe('format', () => {
 			args: Parameters<typeof format>;
 			out: ReturnType<typeof format>;
 		}>([
-			{ args: [60, { inputUnit: 's' }], out: '1m' },
-			{ args: [60, { inputUnit: 'm' }], out: '1h' },
-			{ args: [24, { inputUnit: 'h' }], out: '1d' },
-			{ args: [604_800, { inputUnit: 's' }], out: '1w' },
-		])('format($args) => $out', ({ args, out }) => {
+			{args: [60, {inputUnit: 's'}], out: '1m'},
+			{args: [60, {inputUnit: 'm'}], out: '1h'},
+			{args: [24, {inputUnit: 'h'}], out: '1d'},
+			{args: [604_800, {inputUnit: 's'}], out: '1w'},
+		])('format($args) => $out', ({args, out}) => {
 			expect(format(...args)).toBe(out);
 		});
 	});
@@ -69,14 +69,14 @@ describe('format', () => {
 			args: Parameters<typeof format>;
 			out: ReturnType<typeof format>;
 		}>([
-			{ args: [0, { units }], out: '0с' },
-			{ args: [1, { units }], out: '1с' },
-			{ args: [3 * 86_400, { units }], out: '3д' },
-			{ args: [7 * 604_800, { units }], out: '7нед' },
-			{ args: [2 * 86_400 + 5, { units }], out: '2д 5с' },
-			{ args: [3, { units, inputUnit: 'д' }], out: '3д' },
-			{ args: [1, { units, inputUnit: 'нед' }], out: '1нед' },
-		])('format($args) => $out', ({ args, out }) => {
+			{args: [0, {units}], out: '0с'},
+			{args: [1, {units}], out: '1с'},
+			{args: [3 * 86_400, {units}], out: '3д'},
+			{args: [7 * 604_800, {units}], out: '7нед'},
+			{args: [(2 * 86_400) + 5, {units}], out: '2д 5с'},
+			{args: [3, {units, inputUnit: 'д'}], out: '3д'},
+			{args: [1, {units, inputUnit: 'нед'}], out: '1нед'},
+		])('format($args) => $out', ({args, out}) => {
 			expect(format(...args)).toBe(out);
 		});
 	});
